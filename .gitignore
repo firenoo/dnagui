@@ -1,0 +1,27 @@
+#Batch files for compiling
+*.bat
+
+#Production
+/production/**
+/dnagui_compressed/**
+dnagui_compressed.zip
+
+#Test
+/firenoo/test
+
+#Class files
+*.class
+
+#Backups
+*~
+
+#Tests
+test.bin
+
+#Libraries
+/cellapi/*
+/javafx-sdk-15/**
+
+#Intellij
+/.idea/*
+/dnagui/

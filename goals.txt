@@ -1,0 +1,58 @@
+About Firenoo's DNA API
+
+0. Purpose:
+
+To create a semi-realistic representation of genetics.
+
+1. Definitions/Concepts:
+
+DNA - A molecule that stores genetic information. In real life, it consists of two long chains of sugars and phosphates, bridged by the nitrogenous bases Adenine, Guanine, Cytosine, and Thymine. The shape is a double helix. In the implementation, it should be represented by a long stream of bits rather than genetic bases.
+
+RNA - A complement to DNA. The shape is a single strand.
+
+Gene - A sequence of DNA. There are 3 types of genes:
+a) Visible gene: These genes control alleles.
+b) Control gene: These genes control other genes.
+c) Hidden gene: These genes don't do anything.
+
+Trait - A visible "consequence" of DNA.
+
+Allele - An individual expression of a trait.
+
+2. DNA Structure
+
+DNA is represented by a stream of bits. The length is implementation-defined, but should be a multiple of the size of a gene.
+
+A DNA object should encapsulate this stream, and provide methods for traversing and operating on it.
+
+A Gene consists of an implementation-defined number of bytes. These should not be represented by any object, but help provide identification to parts of the stream, as well as a window for looking at the stream. Thus, genes are contained in the DNA object implementation.
+
+Header Markers, Body, Tail
+The stream should begin with a 8-byte number that declares the size of a "Gene", followed by a hash code (length of which should be 4 * size of a gene). The hash code will be used for traits. This hash code also determines the species. A slight modification to the hash code will represent a different species. Finally, another number the size of a gene represents how many generations have passed. These numbers are called header markers. The stream of DNA data is called the body. The tail is defined as an EOF marker.
+
+A Gene object is not required. The concept of a Gene is rooted in the implementation of DNA. However, for convenience it is recommended for easier access.
+
+A region of DNA is a collection of genes. This is only a concept and will not be reflected in code.
+
+Traits are the visible consequences of DNA. Production speed is a trait, for example. As stated previously, a hash code should provide the basis for which genes are used to express which traits.
+
+Alleles are the individual expression of traits. A fast production speed is an allele, expressing the Production speed trait, for example.
+
+3. Traits
+Traits are defined by the implementation. Regardless, traits should be a reflection of the genes found in the DNA object.
+
+4. Replication
+DNA should be able to be cloned. It should create a deep copy of the DNA object.
+
+5. Mutations
+
+A mutation occurs once per replication cycle at minimum. There is no absolute maximum - that is implementation-defined.
+
+Here are the operations that are required to be implemented:
+-Gene Swap: A gene has its value swapped with another gene at random. Generally, a swap occurs locally and should stay within a region.
+-Gene Change: A gene has its value changed randomly, based on the species and the generation number.
+-Insertion: A whole gene is inserted. This gene is randomly generated, based on the species and the generation number. The length of the DNA is increased by 1.
+-Removal: A whole gene is removed. The length of the DNA is decreased by 1.
+
+Mutation weights are as follows: Gene swaps are the most common, followed by gene changes, followed by insertion and removal (same weight). The exact weights of each are implementation-defined.
+
